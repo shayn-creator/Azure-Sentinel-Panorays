@@ -1,0 +1,100 @@
+{
+  "name": "ccpPanoraysCompanyFindingPOC",
+  "apiVersion": "2024-01-01-preview",
+  "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
+  "kind": "Customizable",
+  "properties": {
+    "connectorUiConfig": {
+      "id": "ccpPanoraysCompanyFindingPOC",
+      "title": "Panorays",
+      "publisher": "Microsoft",
+      "descriptionMarkdown": "The [Panorays](https://panorays-papi-v2-documentation.redocly.app/#api-access) data connector allows ingesting company findings from the Panorays API into Microsoft Sentinel. The data connector is built on Microsoft Sentinel Codeless Connector Platform. It uses the Panorays API to fetch data and it supports DCR-based [ingestion time transformations](https://docs.microsoft.com/azure/azure-monitor/logs/custom-logs-overview) that parses the received security data into a custom table so that queries don't need to parse it again, thus resulting in better performance.",
+      "graphQueries": [
+        {
+                    "metricName": "Total findings found",
+                    "legend": "Comnapny Findings",
+                    "baseQuery": "{{graphQueriesTableName}}"
+        }
+      ],
+      "sampleQueries": [
+
+      ],
+      "dataTypes": [
+
+      ],
+      "connectivityCriteria": [
+        {
+          "type": "HasDataConnectors",
+          "value": null
+        }
+      ],
+      "availability": {
+        "status": 1,
+        "isPreview": false
+      },
+      "permissions": {
+        "tenant": null,
+        "licenses": null,
+        "resourceProvider": [
+          {
+            "provider": "Microsoft.OperationalInsights/workspaces",
+            "permissionsDisplayText": "Read and Write permissions are required.",
+            "providerDisplayName": "Workspace",
+            "scope": "Workspace",
+            "requiredPermissions": {
+              "read": true,
+              "write": true,
+              "delete": true,
+              "action": false
+            }
+          }
+        ]
+      },
+      "instructionSteps": [
+        {
+          "instructions": [
+            {
+              "type": "Markdown",
+              "parameters": {
+                "content": "#### Configuration steps for the Panorays API \n Follow the instructions to obtain the credentials. "
+              }
+            },
+            {
+              "type": "Markdown",
+              "parameters": {
+                "content": "#### 1. Retrieve Panorays API Token from here: https://www.panoraysapp.com/profile/api_tokens"
+              }
+            },
+            {
+              "parameters": {
+                "label": "Panorays Management URL",
+                "placeholder": "https://www.panoraysapp.com/",
+                "type": "text",
+                "name": "managementUrl"
+              },
+              "type": "Textbox"
+            },
+            {
+              "parameters": {
+                "label": "API Token",
+                "placeholder": "API Token",
+                "type": "securestring",
+                "name": "apitoken"
+              },
+              "type": "Textbox"
+            },
+            {
+              "parameters": {
+                "label": "toggle",
+                "name": "toggle"
+              },
+              "type": "ConnectionToggleButton"
+            }
+          ],
+          "innerSteps": null
+        }
+      ],
+      "isConnectivityCriteriasMatchSome": false
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+    "name": "PanoraysCompanyFindingsDCR",
+    "apiVersion": "2021-09-01-preview",
+    "location": "[parameters('workspace-location')]",
+    "type": "Microsoft.Insights/dataCollectionRules",
+    "properties": {
+        "streamDeclarations": {
+            "Custom-PanoraysCompanyFindings_API": {
+                "columns": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "The status attribute. Possible values: OPEN, DONE"
+                    },
+                    {
+                        "name": "id",
+                        "type": "string",
+                        "description": "The unique identifier for the record."
+                    },
+                    {
+                        "name": "metadata",
+                        "type": "string",
+                        "description": "The finding metadata."
+                    },
+                    {
+                        "name": "cves",
+                        "type": "string",
+                        "description": "The primary description of the event."
+                    },
+                    {
+                        "name": "asset_name",
+                        "type": "string",
+                        "description": "The company asset name."
+                    },
+                    {
+                        "name": "category",
+                        "type": "string",
+                        "description": "The finding category."
+                    },
+                    {
+                        "name": "sub_category",
+                        "type": "string",
+                        "description": "The finding sub-category."
+                    },
+                    {
+                        "name": "test_text",
+                        "type": "string",
+                        "description": "test_text."
+                    },
+                    {
+                        "name": "insert_ts",
+                        "type": "string",
+                        "description": "The timestamp (UTC) when the record was created."
+                    },
+                    {
+                        "name": "update_ts",
+                        "type": "string",
+                        "description": "The timestamp (UTC) when the record was last updated."
+                    },
+                    {
+                        "name": "test_name",
+                        "type": "string",
+                        "description": "test_name"
+                    },
+                    {
+                        "name": "segments",
+                        "type": "Array",
+                        "description": "The hash associated with the event."
+                    }
+                ]
+            }
+        },
+        "destinations": {
+            "logAnalytics": [
+                {
+                    "workspaceResourceId": "not important. changed by the script",
+                    "name": "clv2ws1"
+                }
+            ]
+        },
+        "dataFlows": [
+            {
+                "streams": [
+                    "Custom-PanoraysCompanyFindings_API"
+                ],
+                "destinations": [
+                    "clv2ws1"
+                ],
+                "transformKql": "source | project TimeGenerated = createdAt, AgentUpdatedVersion = agentUpdatedVersion, UserId = userId, ThreatId = threatId, PrimaryDescription = primaryDescription, SecondaryDescription = secondaryDescription, Id = id, GroupId = groupId, CreatedAt = createdAt, AccountName = accountName, Data = data, AgentId = agentId, Hash = hash, UpdatedAt = todatetime(updatedAt), Description = description, ActivityUuid = activityUuid, SiteId = siteId, ActivityType = activityType, SiteName = siteName, AccountId = accountId, OsFamily = osFamily, GroupName = groupName, Comments = comments",
+                "outputStream": "Custom-anoraysCompanyFindings_CL"
+            }
+        ],
+        "dataCollectionEndpointId": "[concat('/subscriptions/',parameters('subscription'),'/resourceGroups/',parameters('resourceGroupName'),'/providers/Microsoft.Insights/dataCollectionEndpoints/',parameters('workspace'))]"
+
+    }
+}

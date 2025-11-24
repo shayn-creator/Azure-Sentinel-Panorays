@@ -55,7 +55,7 @@
     "email": "support@microsoft.com",
     "_email": "[variables('email')]",
     "_solutionName": "SentinelOne",
-    "_solutionVersion": "3.0.6",
+    "_solutionVersion": "3.0.7",
     "solutionId": "azuresentinel.azure-sentinel-solution-sentinelone",
     "_solutionId": "[variables('solutionId')]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
@@ -329,6 +329,8 @@
                     "isPreview": false
                   },
                   "permissions": {
+                    "tenant": null,
+                    "licenses": null,
                     "resourceProvider": [
                       {
                         "provider": "Microsoft.OperationalInsights/workspaces",
@@ -390,7 +392,8 @@
                           },
                           "type": "ConnectionToggleButton"
                         }
-                      ]
+                      ],
+                      "innerSteps": null
                     }
                   ],
                   "isConnectivityCriteriasMatchSome": false
@@ -1120,256 +1123,6 @@
               }
             },
             {
-              "name": "SentinelOneThreats_CL",
-              "apiVersion": "2022-10-01",
-              "type": "Microsoft.OperationalInsights/workspaces/tables",
-              "location": "[parameters('workspace-location')]",
-              "kind": null,
-              "properties": {
-                "schema": {
-                  "name": "SentinelOneThreats_CL",
-                  "columns": [
-                    {
-                      "name": "TimeGenerated",
-                      "type": "datetime",
-                      "isDefaultDisplay": true,
-                      "description": "The timestamp (UTC) reflecting the time in which the event was generated."
-                    },
-                    {
-                      "name": "FilePath",
-                      "type": "string",
-                      "description": "The path of the file."
-                    },
-                    {
-                      "name": "CloudVerdict",
-                      "type": "string",
-                      "description": "The cloud verdict for the file."
-                    },
-                    {
-                      "name": "MitigationMode",
-                      "type": "string",
-                      "description": "The mode of mitigation applied."
-                    },
-                    {
-                      "name": "AgentOsType",
-                      "type": "string",
-                      "description": "The operating system type of the agent."
-                    },
-                    {
-                      "name": "AgentInfected",
-                      "type": "boolean",
-                      "description": "Indicates whether the agent is infected."
-                    },
-                    {
-                      "name": "InitiatingUserId",
-                      "type": "string",
-                      "description": "The unique identifier for the initiating user."
-                    },
-                    {
-                      "name": "Engines",
-                      "type": "string",
-                      "description": "Details of the engines used."
-                    },
-                    {
-                      "name": "Id",
-                      "type": "string",
-                      "description": "The unique identifier for the record."
-                    },
-                    {
-                      "name": "FileExtensionType",
-                      "type": "string",
-                      "description": "The type of file extension."
-                    },
-                    {
-                      "name": "MitigationStatus",
-                      "type": "string",
-                      "description": "The status of mitigation."
-                    },
-                    {
-                      "name": "AgentDomain",
-                      "type": "string",
-                      "description": "The domain of the agent."
-                    },
-                    {
-                      "name": "CreatedAt",
-                      "type": "datetime",
-                      "description": "The timestamp (UTC) when the record was created."
-                    },
-                    {
-                      "name": "IsCertValid",
-                      "type": "boolean",
-                      "description": "Indicates whether the certificate is valid."
-                    },
-                    {
-                      "name": "FileDisplayName",
-                      "type": "string",
-                      "description": "The display name of the file."
-                    },
-                    {
-                      "name": "AgentIp",
-                      "type": "string",
-                      "description": "The IP address of the agent."
-                    },
-                    {
-                      "name": "AccountName",
-                      "type": "string",
-                      "description": "The name of the account associated with the event."
-                    },
-                    {
-                      "name": "AgentMachineType",
-                      "type": "string",
-                      "description": "The machine type of the agent."
-                    },
-                    {
-                      "name": "FileVerificationType",
-                      "type": "string",
-                      "description": "The type of file verification."
-                    },
-                    {
-                      "name": "Indicators",
-                      "type": "string",
-                      "description": "Details of the indicators."
-                    },
-                    {
-                      "name": "InitiatedByDescription",
-                      "type": "string",
-                      "description": "Description of the initiated by field."
-                    },
-                    {
-                      "name": "AutomaticallyResolved",
-                      "type": "boolean",
-                      "description": "Indicates whether the issue was automatically resolved."
-                    },
-                    {
-                      "name": "AgentId",
-                      "type": "string",
-                      "description": "The unique identifier for the agent."
-                    },
-                    {
-                      "name": "ProcessArguments",
-                      "type": "string",
-                      "description": "The unique identifier for the malicious group."
-                    },
-                    {
-                      "name": "MitigationReport",
-                      "type": "string",
-                      "description": "Report of the actions taken by the Agent."
-                    },
-                    {
-                      "name": "ThreatName",
-                      "type": "string",
-                      "description": "Details about the threat name."
-                    },
-                    {
-                      "name": "ClassificationSource",
-                      "type": "string",
-                      "description": "The source of the classification."
-                    },
-                    {
-                      "name": "UpdatedAt",
-                      "type": "datetime",
-                      "description": "The timestamp (UTC) when the record was last updated."
-                    },
-                    {
-                      "name": "InitiatedBy",
-                      "type": "string",
-                      "description": "Indicates by whom or what the action was initiated."
-                    },
-                    {
-                      "name": "AgentNetworkStatus",
-                      "type": "string",
-                      "description": "The network status of the agent."
-                    },
-                    {
-                      "name": "AgentComputerName",
-                      "type": "string",
-                      "description": "The computer name of the agent."
-                    },
-                    {
-                      "name": "Classification",
-                      "type": "string",
-                      "description": "The classification of the event."
-                    },
-                    {
-                      "name": "CertId",
-                      "type": "string",
-                      "description": "The certificate ID."
-                    },
-                    {
-                      "name": "AgentIsActive",
-                      "type": "boolean",
-                      "description": "Indicates whether the agent is active."
-                    },
-                    {
-                      "name": "SiteId",
-                      "type": "string",
-                      "description": "The unique identifier for the site."
-                    },
-                    {
-                      "name": "AgentVersion",
-                      "type": "string",
-                      "description": "The version of the agent."
-                    },
-                    {
-                      "name": "FileContentHash",
-                      "type": "string",
-                      "description": "The hash of the file content."
-                    },
-                    {
-                      "name": "WhiteningOptions",
-                      "type": "string",
-                      "description": "Details of the whitening options."
-                    },
-                    {
-                      "name": "Username",
-                      "type": "string",
-                      "description": "The username associated with the event."
-                    },
-                    {
-                      "name": "FileSha256",
-                      "type": "string",
-                      "description": "The SHA-256 hash of the file."
-                    },
-                    {
-                      "name": "AgentIsDecommissioned",
-                      "type": "boolean",
-                      "description": "Indicates whether the agent is decommissioned."
-                    },
-                    {
-                      "name": "CollectionId",
-                      "type": "string",
-                      "description": "The unique identifier for the collection."
-                    },
-                    {
-                      "name": "SiteName",
-                      "type": "string",
-                      "description": "The name of the site."
-                    },
-                    {
-                      "name": "AccountId",
-                      "type": "string",
-                      "description": "The unique identifier for the account."
-                    },
-                    {
-                      "name": "ThreatInfo",
-                      "type": "dynamic",
-                      "description": "The information about the threat."
-                    },
-                    {
-                      "name": "AgentDetectionInfo",
-                      "type": "dynamic",
-                      "description": "The information of the agent in detection."
-                    },
-                    {
-                      "name": "AgentRealtimeInfo",
-                      "type": "dynamic",
-                      "description": "The information of the agent in realtime."
-                    }
-                  ]
-                }
-              }
-            },
-            {
               "name": "SentinelOneActivities_CL",
               "apiVersion": "2022-10-01",
               "type": "Microsoft.OperationalInsights/workspaces/tables",
@@ -2013,6 +1766,256 @@
                   ]
                 }
               }
+            },
+            {
+              "name": "SentinelOneThreats_CL",
+              "apiVersion": "2022-10-01",
+              "type": "Microsoft.OperationalInsights/workspaces/tables",
+              "location": "[parameters('workspace-location')]",
+              "kind": null,
+              "properties": {
+                "schema": {
+                  "name": "SentinelOneThreats_CL",
+                  "columns": [
+                    {
+                      "name": "TimeGenerated",
+                      "type": "datetime",
+                      "isDefaultDisplay": true,
+                      "description": "The timestamp (UTC) reflecting the time in which the event was generated."
+                    },
+                    {
+                      "name": "FilePath",
+                      "type": "string",
+                      "description": "The path of the file."
+                    },
+                    {
+                      "name": "CloudVerdict",
+                      "type": "string",
+                      "description": "The cloud verdict for the file."
+                    },
+                    {
+                      "name": "MitigationMode",
+                      "type": "string",
+                      "description": "The mode of mitigation applied."
+                    },
+                    {
+                      "name": "AgentOsType",
+                      "type": "string",
+                      "description": "The operating system type of the agent."
+                    },
+                    {
+                      "name": "AgentInfected",
+                      "type": "boolean",
+                      "description": "Indicates whether the agent is infected."
+                    },
+                    {
+                      "name": "InitiatingUserId",
+                      "type": "string",
+                      "description": "The unique identifier for the initiating user."
+                    },
+                    {
+                      "name": "Engines",
+                      "type": "string",
+                      "description": "Details of the engines used."
+                    },
+                    {
+                      "name": "Id",
+                      "type": "string",
+                      "description": "The unique identifier for the record."
+                    },
+                    {
+                      "name": "FileExtensionType",
+                      "type": "string",
+                      "description": "The type of file extension."
+                    },
+                    {
+                      "name": "MitigationStatus",
+                      "type": "string",
+                      "description": "The status of mitigation."
+                    },
+                    {
+                      "name": "AgentDomain",
+                      "type": "string",
+                      "description": "The domain of the agent."
+                    },
+                    {
+                      "name": "CreatedAt",
+                      "type": "datetime",
+                      "description": "The timestamp (UTC) when the record was created."
+                    },
+                    {
+                      "name": "IsCertValid",
+                      "type": "boolean",
+                      "description": "Indicates whether the certificate is valid."
+                    },
+                    {
+                      "name": "FileDisplayName",
+                      "type": "string",
+                      "description": "The display name of the file."
+                    },
+                    {
+                      "name": "AgentIp",
+                      "type": "string",
+                      "description": "The IP address of the agent."
+                    },
+                    {
+                      "name": "AccountName",
+                      "type": "string",
+                      "description": "The name of the account associated with the event."
+                    },
+                    {
+                      "name": "AgentMachineType",
+                      "type": "string",
+                      "description": "The machine type of the agent."
+                    },
+                    {
+                      "name": "FileVerificationType",
+                      "type": "string",
+                      "description": "The type of file verification."
+                    },
+                    {
+                      "name": "Indicators",
+                      "type": "string",
+                      "description": "Details of the indicators."
+                    },
+                    {
+                      "name": "InitiatedByDescription",
+                      "type": "string",
+                      "description": "Description of the initiated by field."
+                    },
+                    {
+                      "name": "AutomaticallyResolved",
+                      "type": "boolean",
+                      "description": "Indicates whether the issue was automatically resolved."
+                    },
+                    {
+                      "name": "AgentId",
+                      "type": "string",
+                      "description": "The unique identifier for the agent."
+                    },
+                    {
+                      "name": "ProcessArguments",
+                      "type": "string",
+                      "description": "The unique identifier for the malicious group."
+                    },
+                    {
+                      "name": "MitigationReport",
+                      "type": "string",
+                      "description": "Report of the actions taken by the Agent."
+                    },
+                    {
+                      "name": "ThreatName",
+                      "type": "string",
+                      "description": "Details about the threat name."
+                    },
+                    {
+                      "name": "ClassificationSource",
+                      "type": "string",
+                      "description": "The source of the classification."
+                    },
+                    {
+                      "name": "UpdatedAt",
+                      "type": "datetime",
+                      "description": "The timestamp (UTC) when the record was last updated."
+                    },
+                    {
+                      "name": "InitiatedBy",
+                      "type": "string",
+                      "description": "Indicates by whom or what the action was initiated."
+                    },
+                    {
+                      "name": "AgentNetworkStatus",
+                      "type": "string",
+                      "description": "The network status of the agent."
+                    },
+                    {
+                      "name": "AgentComputerName",
+                      "type": "string",
+                      "description": "The computer name of the agent."
+                    },
+                    {
+                      "name": "Classification",
+                      "type": "string",
+                      "description": "The classification of the event."
+                    },
+                    {
+                      "name": "CertId",
+                      "type": "string",
+                      "description": "The certificate ID."
+                    },
+                    {
+                      "name": "AgentIsActive",
+                      "type": "boolean",
+                      "description": "Indicates whether the agent is active."
+                    },
+                    {
+                      "name": "SiteId",
+                      "type": "string",
+                      "description": "The unique identifier for the site."
+                    },
+                    {
+                      "name": "AgentVersion",
+                      "type": "string",
+                      "description": "The version of the agent."
+                    },
+                    {
+                      "name": "FileContentHash",
+                      "type": "string",
+                      "description": "The hash of the file content."
+                    },
+                    {
+                      "name": "WhiteningOptions",
+                      "type": "string",
+                      "description": "Details of the whitening options."
+                    },
+                    {
+                      "name": "Username",
+                      "type": "string",
+                      "description": "The username associated with the event."
+                    },
+                    {
+                      "name": "FileSha256",
+                      "type": "string",
+                      "description": "The SHA-256 hash of the file."
+                    },
+                    {
+                      "name": "AgentIsDecommissioned",
+                      "type": "boolean",
+                      "description": "Indicates whether the agent is decommissioned."
+                    },
+                    {
+                      "name": "CollectionId",
+                      "type": "string",
+                      "description": "The unique identifier for the collection."
+                    },
+                    {
+                      "name": "SiteName",
+                      "type": "string",
+                      "description": "The name of the site."
+                    },
+                    {
+                      "name": "AccountId",
+                      "type": "string",
+                      "description": "The unique identifier for the account."
+                    },
+                    {
+                      "name": "ThreatInfo",
+                      "type": "dynamic",
+                      "description": "The information about the threat."
+                    },
+                    {
+                      "name": "AgentDetectionInfo",
+                      "type": "dynamic",
+                      "description": "The information of the agent in detection."
+                    },
+                    {
+                      "name": "AgentRealtimeInfo",
+                      "type": "dynamic",
+                      "description": "The information of the agent in realtime."
+                    }
+                  ]
+                }
+              }
             }
           ]
         },
@@ -2110,7 +2113,8 @@
           ],
           "connectivityCriteria": [
             {
-              "type": "HasDataConnectors"
+              "type": "HasDataConnectors",
+              "value": null
             }
           ],
           "availability": {
@@ -2118,6 +2122,8 @@
             "isPreview": false
           },
           "permissions": {
+            "tenant": null,
+            "licenses": null,
             "resourceProvider": [
               {
                 "provider": "Microsoft.OperationalInsights/workspaces",
@@ -2179,7 +2185,8 @@
                   },
                   "type": "ConnectionToggleButton"
                 }
-              ]
+              ],
+              "innerSteps": null
             }
           ],
           "isConnectivityCriteriasMatchSome": false
@@ -2237,14 +2244,22 @@
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('dataConnectorCCPVersion')]",
           "parameters": {
+            "guidValue": {
+              "defaultValue": "[[newGuid()]",
+              "type": "securestring"
+            },
+            "innerWorkspace": {
+              "defaultValue": "[parameters('workspace')]",
+              "type": "securestring"
+            },
             "connectorDefinitionName": {
               "defaultValue": "SentinelOne",
-              "type": "string",
+              "type": "securestring",
               "minLength": 1
             },
             "workspace": {
               "defaultValue": "[parameters('workspace')]",
-              "type": "string"
+              "type": "securestring"
             },
             "dcrConfig": {
               "defaultValue": {
@@ -2255,7 +2270,7 @@
             },
             "managementUrl": {
               "defaultValue": "managementUrl",
-              "type": "string",
+              "type": "securestring",
               "minLength": 1
             },
             "apitoken": {
@@ -2295,7 +2310,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_activities_created_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_activities_created_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2346,7 +2361,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_agents_created_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_agents_created_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2397,7 +2412,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_agents_updated_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_agents_updated_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2448,7 +2463,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_alerts_created_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_alerts_created_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2499,7 +2514,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_groups_updated_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_groups_updated_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2550,7 +2565,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_threats_created_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_threats_created_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2601,7 +2616,7 @@
               }
             },
             {
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_threats_updated_events')]",
+              "name": "[[concat(parameters('innerWorkspace'),'/Microsoft.SecurityInsights/', 'SentinelOnePoller_threats_updated_events', parameters('guidValue'))]",
               "apiVersion": "2023-02-01-preview",
               "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
               "location": "[parameters('workspace-location')]",
@@ -2671,7 +2686,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOne data connector with template version 3.0.6",
+        "description": "SentinelOne data connector with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('dataConnectorVersion2')]",
@@ -3028,7 +3043,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOne Workbook with template version 3.0.6",
+        "description": "SentinelOne Workbook with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('workbookVersion1')]",
@@ -3046,7 +3061,7 @@
               },
               "properties": {
                 "displayName": "[parameters('workbook1-name')]",
-                "serializedData": "{\"version\":\"Notebook/1.0\",\"items\":[{\"type\":1,\"content\":{\"json\":\"**NOTE**: This data connector depends on a parser based on Kusto Function **SentinelOne** to work as expected. [Follow steps to get this Kusto Function](https://aka.ms/sentinel-sentinelone-parser)\"},\"name\":\"text - 8\"},{\"type\":9,\"content\":{\"version\":\"KqlParameterItem/1.0\",\"parameters\":[{\"id\":\"cd8447d9-b096-4673-92d8-2a1e8291a125\",\"version\":\"KqlParameterItem/1.0\",\"name\":\"TimeRange\",\"type\":4,\"description\":\"Sets the time name for analysis\",\"value\":{\"durationMs\":604800000},\"typeSettings\":{\"selectableValues\":[{\"durationMs\":900000},{\"durationMs\":3600000},{\"durationMs\":86400000},{\"durationMs\":604800000},{\"durationMs\":2592000000},{\"durationMs\":7776000000}]},\"timeContext\":{\"durationMs\":86400000}}],\"style\":\"pills\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\"},\"name\":\"parameters - 11\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| make-series TotalEvents = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain};\",\"size\":0,\"title\":\"Events over time\",\"color\":\"orange\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"timechart\",\"graphSettings\":{\"type\":0}},\"customWidth\":\"50\",\"name\":\"query - 12\",\"styleSettings\":{\"maxWidth\":\"55\"}},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where EventType =~ 'Agents.'\\r\\n| summarize count() by AgentVersion\\r\\n\\r\\n\",\"size\":3,\"title\":\"Agents by version\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"piechart\",\"tileSettings\":{\"titleContent\":{\"columnMatch\":\"Title\",\"formatter\":1},\"leftContent\":{\"columnMatch\":\"e_count\",\"formatter\":12,\"formatOptions\":{\"palette\":\"auto\"},\"numberFormat\":{\"unit\":17,\"options\":{\"style\":\"decimal\",\"maximumFractionDigits\":2,\"maximumSignificantDigits\":3}}},\"secondaryContent\":{\"columnMatch\":\"Trend\",\"formatter\":9,\"formatOptions\":{\"palette\":\"purple\"}},\"showBorder\":false}},\"customWidth\":\"35\",\"name\":\"query - 0\",\"styleSettings\":{\"maxWidth\":\"30\"}},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"let usr1 = SentinelOne\\n| where isnotempty(SrcUserName)\\n| project usr=SrcUserName;\\nlet usr2 = SentinelOne\\n| where isnotempty(DataUserName)\\n| project usr=DataUserName;\\nlet all_usr =\\nunion isfuzzy=true usr1, usr2\\n| summarize cnt = dcount(usr)\\n| extend title = 'Users';\\nlet agnt = SentinelOne\\n| where isnotempty(AgentId)\\n| summarize cnt = dcount(AgentId)\\n| extend title = 'Agents';\\nlet alerts = SentinelOne\\n| where ActivityType == 3608\\n| summarize cnt = count()\\n| extend title = 'Alerts';\\nunion isfuzzy=true all_usr, agnt, alerts\",\"size\":3,\"title\":\"SentinelOne Summary\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"tiles\",\"tileSettings\":{\"titleContent\":{\"columnMatch\":\"title\",\"formatter\":1},\"leftContent\":{\"columnMatch\":\"cnt\",\"formatter\":12,\"formatOptions\":{\"palette\":\"auto\"},\"numberFormat\":{\"unit\":17,\"options\":{\"style\":\"decimal\",\"maximumFractionDigits\":2,\"maximumSignificantDigits\":3}}},\"showBorder\":false}},\"customWidth\":\"15\",\"name\":\"query - 10\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n  | where ActivityType == 27\\r\\n  | where DataRole =~ 'Admin'\\r\\n  | extend SrcIpAddr = extract(@'Address\\\\s(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})', 1, EventOriginalMessage)\\r\\n  | where isnotempty(SrcIpAddr)\\r\\n  | summarize Events=count() by SrcIpAddr\",\"size\":3,\"title\":\"Admin Sources\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"piechart\"},\"customWidth\":\"35\",\"name\":\"query - 3\",\"styleSettings\":{\"margin\":\"10\",\"padding\":\"10\"}},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where isnotempty(DataRole)\\r\\n| where DataRole =~ 'Admin'\\r\\n| order by EventCreationTime\\r\\n| limit 100\\r\\n| project EventCreationTime, User=case(isnotempty(SrcUserName), SrcUserName, DataUserName), Action=EventOriginalMessage\",\"size\":1,\"title\":\"Admin activities\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\",\"gridSettings\":{\"filter\":true}},\"customWidth\":\"55\",\"name\":\"query - 2\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where ActivityType == 3608\\r\\n| extend RuleName = extract(@'Custom Rule:\\\\s(.*?)\\\\sin Group', 1, EventOriginalMessage)\\r\\n| summarize Hits=count() by RuleName\\r\\n| top 10 by Hits\\r\\n\",\"size\":1,\"title\":\"Top rules fired\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\",\"gridSettings\":{\"formatters\":[{\"columnMatch\":\"Hits\",\"formatter\":8,\"formatOptions\":{\"palette\":\"redGreen\"}}],\"rowLimit\":50}},\"customWidth\":\"40\",\"name\":\"query - 8\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where ActivityType == 3608\\r\\n| extend AlertTrigger = extract(@'Alert created for\\\\s+(.*?)\\\\sfrom Custom', 1, EventOriginalMessage)\\r\\n| summarize Events=count() by AlertTrigger\\r\\n\",\"size\":3,\"title\":\"Alert triggers\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"piechart\"},\"customWidth\":\"30\",\"name\":\"query - 1\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\n| where ActivityType == 3608\\n| extend Host = extract(@'detected on\\\\s(\\\\S+)\\\\.', 1, EventOriginalMessage)\\n| summarize AlertCount=count() by Host\\n\",\"size\":1,\"title\":\"Hosts by alert count\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\"},\"customWidth\":\"30\",\"name\":\"query - 10\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where ActivityType == 3002\\r\\n| order by EventCreationTime\\r\\n| project Hash=EventSubStatus\",\"size\":1,\"title\":\"Recent black hashes\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\",\"gridSettings\":{\"formatters\":[{\"columnMatch\":\"Hash\",\"formatter\":0,\"formatOptions\":{\"customColumnWidthSetting\":\"100%\"}}],\"rowLimit\":100,\"filter\":true}},\"customWidth\":\"30\",\"name\":\"query - 12\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\n| where ActivityType == 3608\\n| order by EventCreationTime\\n| extend AlertRule = extract(@'Custom Rule:\\\\s(.*?)\\\\sin Group', 1, EventOriginalMessage)\\n| extend AffectedHost = extract(@'detected on\\\\s(\\\\S+)\\\\.', 1, EventOriginalMessage)\\n| project EventCreationTime, AffectedHost, AlertRule\",\"size\":1,\"title\":\"Latest alerts\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\"},\"customWidth\":\"70\",\"name\":\"query - 11\"}],\"fromTemplateId\":\"sentinel-SentinelOneWorkbook\",\"$schema\":\"https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json\"}\r\n",
+                "serializedData": "{\"version\":\"Notebook/1.0\",\"items\":[{\"type\":1,\"content\":{\"json\":\"**NOTE**: This data connector depends on a parser based on Kusto Function **SentinelOne** to work as expected. [Follow steps to get this Kusto Function](https://aka.ms/sentinel-sentinelone-parser)\"},\"name\":\"text - 8\"},{\"type\":9,\"content\":{\"version\":\"KqlParameterItem/1.0\",\"parameters\":[{\"id\":\"cd8447d9-b096-4673-92d8-2a1e8291a125\",\"version\":\"KqlParameterItem/1.0\",\"name\":\"TimeRange\",\"type\":4,\"description\":\"Sets the time name for analysis\",\"value\":{\"durationMs\":604800000},\"typeSettings\":{\"selectableValues\":[{\"durationMs\":900000},{\"durationMs\":3600000},{\"durationMs\":86400000},{\"durationMs\":604800000},{\"durationMs\":2592000000},{\"durationMs\":7776000000}]},\"timeContext\":{\"durationMs\":86400000}}],\"style\":\"pills\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\"},\"name\":\"parameters - 11\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| make-series TotalEvents = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain};\",\"size\":0,\"title\":\"Events over time\",\"color\":\"orange\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"timechart\",\"graphSettings\":{\"type\":0}},\"customWidth\":\"50\",\"name\":\"query - 12\",\"styleSettings\":{\"maxWidth\":\"55\"}},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where EventType =~ 'Agents.'\\r\\n| summarize count() by AgentVersion\\r\\n\\r\\n\",\"size\":3,\"title\":\"Agents by version\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"piechart\",\"tileSettings\":{\"titleContent\":{\"columnMatch\":\"Title\",\"formatter\":1},\"leftContent\":{\"columnMatch\":\"e_count\",\"formatter\":12,\"formatOptions\":{\"palette\":\"auto\"},\"numberFormat\":{\"unit\":17,\"options\":{\"style\":\"decimal\",\"maximumFractionDigits\":2,\"maximumSignificantDigits\":3}}},\"secondaryContent\":{\"columnMatch\":\"Trend\",\"formatter\":9,\"formatOptions\":{\"palette\":\"purple\"}},\"showBorder\":false}},\"customWidth\":\"35\",\"name\":\"query - 0\",\"styleSettings\":{\"maxWidth\":\"30\"}},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"let usr1 = SentinelOne\\n| where isnotempty(SrcUserName)\\n| project usr=SrcUserName;\\nlet usr2 = SentinelOne\\n| where isnotempty(DataUserName)\\n| project usr=DataUserName;\\nlet all_usr =\\nunion isfuzzy=true usr1, usr2\\n| summarize cnt = dcount(usr)\\n| extend title = 'Users';\\nlet agnt = SentinelOne\\n| where isnotempty(AgentId)\\n| summarize cnt = dcount(AgentId)\\n| extend title = 'Agents';\\nlet alerts = SentinelOne\\n| where ActivityType == 3608\\n| summarize cnt = count()\\n| extend title = 'Alerts';\\nunion isfuzzy=true all_usr, agnt, alerts\",\"size\":3,\"title\":\"SentinelOne Summary\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"tiles\",\"tileSettings\":{\"titleContent\":{\"columnMatch\":\"title\",\"formatter\":1},\"leftContent\":{\"columnMatch\":\"cnt\",\"formatter\":12,\"formatOptions\":{\"palette\":\"auto\"},\"numberFormat\":{\"unit\":17,\"options\":{\"style\":\"decimal\",\"maximumFractionDigits\":2,\"maximumSignificantDigits\":3}}},\"showBorder\":false}},\"customWidth\":\"15\",\"name\":\"query - 10\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n  | where ActivityType == 27\\r\\n  | where DataRole =~ 'Admin'\\r\\n  | extend SrcIpAddr = extract(@'Address\\\\s(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})', 1, EventOriginalMessage)\\r\\n  | where isnotempty(SrcIpAddr)\\r\\n  | summarize Events=count() by SrcIpAddr\",\"size\":3,\"title\":\"Admin Sources\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"piechart\"},\"customWidth\":\"35\",\"name\":\"query - 3\",\"styleSettings\":{\"margin\":\"10\",\"padding\":\"10\"}},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where isnotempty(DataRole)\\r\\n| where DataRole =~ 'Admin'\\r\\n| order by EventCreationTime\\r\\n| limit 100\\r\\n| project EventCreationTime, User=case(isnotempty(SrcUserName), SrcUserName, DataUserName), Action=EventOriginalMessage\",\"size\":1,\"title\":\"Admin activities\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\",\"gridSettings\":{\"filter\":true}},\"customWidth\":\"55\",\"name\":\"query - 2\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where ActivityType == 3608\\r\\n| extend RuleName = extract(@'Custom Rule:\\\\s(.*?)\\\\sin Group', 1, EventOriginalMessage)\\r\\n| summarize Hits=count() by RuleName\\r\\n| top 10 by Hits\\r\\n\",\"size\":1,\"title\":\"Top rules fired\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\",\"gridSettings\":{\"formatters\":[{\"columnMatch\":\"Hits\",\"formatter\":8,\"formatOptions\":{\"palette\":\"redGreen\"}}],\"rowLimit\":50}},\"customWidth\":\"40\",\"name\":\"query - 8\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where ActivityType == 3608\\r\\n| extend AlertTrigger = extract(@'Alert created for\\\\s+(.*?)\\\\sfrom Custom', 1, EventOriginalMessage)\\r\\n| summarize Events=count() by AlertTrigger\\r\\n\",\"size\":3,\"title\":\"Alert triggers\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"piechart\"},\"customWidth\":\"30\",\"name\":\"query - 1\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\n| where ActivityType == 3608\\n| extend Host = extract(@'detected on\\\\s(\\\\S+)\\\\.', 1, EventOriginalMessage)\\n| summarize AlertCount=count() by Host\\n\",\"size\":1,\"title\":\"Hosts by alert count\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\"},\"customWidth\":\"30\",\"name\":\"query - 10\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\r\\n| where ActivityType == 3002\\r\\n| order by EventCreationTime\\r\\n| project Hash=EventSubStatus\",\"size\":1,\"title\":\"Recent black hashes\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\",\"gridSettings\":{\"formatters\":[{\"columnMatch\":\"Hash\",\"formatter\":0,\"formatOptions\":{\"customColumnWidthSetting\":\"100%\"}}],\"rowLimit\":100,\"filter\":true}},\"customWidth\":\"30\",\"name\":\"query - 12\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"SentinelOne\\n| where ActivityType == 3608\\n| order by EventCreationTime\\n| extend AlertRule = extract(@'Custom Rule:\\\\s(.*?)\\\\sin Group', 1, EventOriginalMessage)\\n| extend AffectedHost = extract(@'detected on\\\\s(\\\\S+)\\\\.', 1, EventOriginalMessage)\\n| project EventCreationTime, AffectedHost, AlertRule\",\"size\":1,\"title\":\"Latest alerts\",\"timeContext\":{\"durationMs\":0},\"timeContextFromParameter\":\"TimeRange\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"visualization\":\"table\"},\"customWidth\":\"70\",\"name\":\"query - 11\"}],\"fromTemplateId\":\"sentinel-SentinelOneWorkbook\",\"$schema\":\"https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json\"}\n",
                 "version": "1.0",
                 "sourceId": "[variables('workspaceResourceId')]",
                 "category": "sentinel"
@@ -3116,7 +3131,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOne Data Parser with template version 3.0.6",
+        "description": "SentinelOne Data Parser with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('parserObject1').parserVersion1]",
@@ -3248,7 +3263,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneAdminLoginNewIP_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneAdminLoginNewIP_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject1').analyticRuleVersion1]",
@@ -3291,22 +3306,22 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "IP",
                     "fieldMappings": [
                       {
-                        "columnName": "IPCustomEntity",
-                        "identifier": "Address"
+                        "identifier": "Address",
+                        "columnName": "IPCustomEntity"
                       }
-                    ],
-                    "entityType": "IP"
+                    ]
                   }
                 ]
               }
@@ -3362,7 +3377,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneAgentUninstalled_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneAgentUninstalled_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject2').analyticRuleVersion2]",
@@ -3404,13 +3419,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Host",
                     "fieldMappings": [
                       {
-                        "columnName": "DataComputerName",
-                        "identifier": "HostName"
+                        "identifier": "HostName",
+                        "columnName": "DataComputerName"
                       }
-                    ],
-                    "entityType": "Host"
+                    ]
                   }
                 ]
               }
@@ -3466,7 +3481,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneAlertFromCustomRule_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneAlertFromCustomRule_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject3').analyticRuleVersion3]",
@@ -3508,13 +3523,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Host",
                     "fieldMappings": [
                       {
-                        "columnName": "HostCustomEntity",
-                        "identifier": "HostName"
+                        "identifier": "HostName",
+                        "columnName": "HostCustomEntity"
                       }
-                    ],
-                    "entityType": "Host"
+                    ]
                   }
                 ]
               }
@@ -3570,7 +3585,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneBlacklistHashDeleted_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneBlacklistHashDeleted_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject4').analyticRuleVersion4]",
@@ -3612,26 +3627,26 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "FileHash",
                     "fieldMappings": [
                       {
-                        "columnName": "HashCustomEntity",
-                        "identifier": "Value"
+                        "identifier": "Value",
+                        "columnName": "HashCustomEntity"
                       },
                       {
-                        "columnName": "HashAlgorithmCustomEntity",
-                        "identifier": "Algorithm"
+                        "identifier": "Algorithm",
+                        "columnName": "HashAlgorithmCustomEntity"
                       }
-                    ],
-                    "entityType": "FileHash"
+                    ]
                   }
                 ]
               }
@@ -3687,7 +3702,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneExclusionAdded_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneExclusionAdded_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject5').analyticRuleVersion5]",
@@ -3729,13 +3744,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   }
                 ]
               }
@@ -3791,7 +3806,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneMultipleAlertsOnHost_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneMultipleAlertsOnHost_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject6').analyticRuleVersion6]",
@@ -3833,13 +3848,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Host",
                     "fieldMappings": [
                       {
-                        "columnName": "HostCustomEntity",
-                        "identifier": "HostName"
+                        "identifier": "HostName",
+                        "columnName": "HostCustomEntity"
                       }
-                    ],
-                    "entityType": "Host"
+                    ]
                   }
                 ]
               }
@@ -3895,7 +3910,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneNewAdmin_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneNewAdmin_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject7').analyticRuleVersion7]",
@@ -3937,13 +3952,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   }
                 ]
               }
@@ -3999,7 +4014,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneRuleDeleted_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneRuleDeleted_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject8').analyticRuleVersion8]",
@@ -4041,13 +4056,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   }
                 ]
               }
@@ -4103,7 +4118,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneRuleDisabled_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneRuleDisabled_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject9').analyticRuleVersion9]",
@@ -4145,13 +4160,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   }
                 ]
               }
@@ -4207,7 +4222,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneSameCustomRuleHitOnDiffHosts_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneSameCustomRuleHitOnDiffHosts_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject10').analyticRuleVersion10]",
@@ -4251,13 +4266,13 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Host",
                     "fieldMappings": [
                       {
-                        "columnName": "HostCustomEntity",
-                        "identifier": "HostName"
+                        "identifier": "HostName",
+                        "columnName": "HostCustomEntity"
                       }
-                    ],
-                    "entityType": "Host"
+                    ]
                   }
                 ]
               }
@@ -4313,7 +4328,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneViewAgentPassphrase_AnalyticalRules Analytics Rule with template version 3.0.6",
+        "description": "SentinelOneViewAgentPassphrase_AnalyticalRules Analytics Rule with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('analyticRuleObject11').analyticRuleVersion11]",
@@ -4355,22 +4370,22 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
-                        "columnName": "AccountCustomEntity",
-                        "identifier": "Name"
+                        "identifier": "Name",
+                        "columnName": "AccountCustomEntity"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "Host",
                     "fieldMappings": [
                       {
-                        "columnName": "HostCustomEntity",
-                        "identifier": "HostName"
+                        "identifier": "HostName",
+                        "columnName": "HostCustomEntity"
                       }
-                    ],
-                    "entityType": "Host"
+                    ]
                   }
                 ]
               }
@@ -4426,7 +4441,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneAgentNotUpdated_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneAgentNotUpdated_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject1').huntingQueryVersion1]",
@@ -4511,7 +4526,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneAgentStatus_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneAgentStatus_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject2').huntingQueryVersion2]",
@@ -4596,7 +4611,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneAlertTriggers_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneAlertTriggers_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject3').huntingQueryVersion3]",
@@ -4681,7 +4696,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneHostNotScanned_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneHostNotScanned_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject4').huntingQueryVersion4]",
@@ -4766,7 +4781,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneNewRules_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneNewRules_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject5').huntingQueryVersion5]",
@@ -4851,7 +4866,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneRulesDeleted_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneRulesDeleted_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject6').huntingQueryVersion6]",
@@ -4936,7 +4951,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneScannedHosts_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneScannedHosts_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject7').huntingQueryVersion7]",
@@ -5021,7 +5036,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneSourcesByAlertCount_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneSourcesByAlertCount_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject8').huntingQueryVersion8]",
@@ -5106,7 +5121,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneUninstalledAgents_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneUninstalledAgents_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject9').huntingQueryVersion9]",
@@ -5191,7 +5206,7 @@
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
       ],
       "properties": {
-        "description": "SentinelOneUsersByAlertCount_HuntingQueries Hunting Query with template version 3.0.6",
+        "description": "SentinelOneUsersByAlertCount_HuntingQueries Hunting Query with template version 3.0.7",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('huntingQueryObject10').huntingQueryVersion10]",
@@ -5272,7 +5287,7 @@
       "apiVersion": "2023-04-01-preview",
       "location": "[parameters('workspace-location')]",
       "properties": {
-        "version": "3.0.6",
+        "version": "3.0.7",
         "kind": "Solution",
         "contentSchemaVersion": "3.0.0",
         "displayName": "SentinelOne",

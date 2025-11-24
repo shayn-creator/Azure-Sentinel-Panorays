@@ -1815,6 +1815,7 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
             if ($global:ccpCounter -eq 1)
             {
                 . "$PSScriptRoot/createCCPConnector.ps1" # load ccp resource creator
+                Write-Host "Shay: the content of ccpDict is $ccpDict "
                 createCCPConnectorResources -contentResourceDetails $contentResourceDetails -dataFileMetadata $dataFileMetadata -solutionFileMetadata $solutionFileMetadata -dcFolderName $dcFolderName -ccpDict $ccpDict -solutionBasePath $solutionBasePath -solutionName $solutionName -ccpTables $ccpTables -ccpTablesCounter $ccpTablesCounter
                 $global:ccpCounter += 1
             }
