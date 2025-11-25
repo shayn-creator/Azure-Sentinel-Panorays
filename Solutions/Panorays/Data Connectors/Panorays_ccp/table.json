@@ -1,0 +1,114 @@
+[{
+    "name": "PanoraysCompanyFindingPOC_CL",
+    "type": "Microsoft.OperationalInsights/workspaces/tables",
+    "apiVersion": "2021-03-01-privatepreview",
+    "tags": {},
+    "properties": {
+        "schema": {
+            "name": "PanoraysCompanyFindingPOC_CL",
+            "columns": [
+                {
+                    "name": "asset_name",
+                    "type": "string",
+                    "description": "asset_name"
+                },
+                {
+                    "name": "TimeGenerated",
+                    "type": "datetime",
+                    "isDefaultDisplay": true,
+                    "description": "The timestamp (UTC) reflecting the time in which the event was generated."
+                },
+                {
+                    "name": "category",
+                    "type": "string",
+                    "description": "category"
+                },
+                {
+                    "name": "cves",
+                    "type": "dynamic",
+                    "description": "Common Vulnerabilities and Exposures"
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "description": "description"
+                },
+                {
+                    "name": "evidence",
+                    "type": "dynamic",
+                    "description": "evidence"
+                },
+                {
+                    "name": "finding_text",
+                    "type": "string",
+                    "description": "finding_text"
+                },
+                {
+                    "name": "id",
+                    "type": "string",
+                    "description": "id"
+                },
+                {
+                    "name": "is_hidden",
+                    "type": "boolean",
+                    "description": "Is hidden"
+                },
+                {
+                    "name": "metadata",
+                    "type": "dynamic",
+                    "description": "metadata"
+                },
+                {
+                    "name": "previously_disputed",
+                    "type": "boolean",
+                    "description": "Previously disputed flag"
+                },
+                {
+                    "name": "segments",
+                    "type": "dynamic",
+                    "description": "Segments"
+                },
+                {
+                    "name": "severity",
+                    "type": "string",
+                    "description": "severity"
+                },
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "status"
+                },
+                {
+                    "name": "status_update_ts",
+                    "type": "string",
+                    "description": "Last status update timestamp"
+                },
+                {
+                    "name": "sub_category",
+                    "type": "string",
+                    "description": "Sub category"
+                },
+                {
+                    "name": "test_name",
+                    "type": "string",
+                    "description": "test name"
+                },
+                {
+                    "name": "test_text",
+                    "type": "string",
+                    "description": "test text"
+                },
+                {
+                    "name": "update_ts",
+                    "type": "datetime",
+                    "description": "Last update timestamp"
+                },
+                {
+                    "name": "updated_by",
+                    "type": "string",
+                    "description": "Last update user"
+                }
+            ]
+        }
+    }
+}]

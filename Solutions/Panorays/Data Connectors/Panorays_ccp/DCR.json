@@ -87,7 +87,7 @@
                     "clv2ws1"
                 ],
                 "transformKql": "source | project TimeGenerated = createdAt, AgentUpdatedVersion = agentUpdatedVersion, UserId = userId, ThreatId = threatId, PrimaryDescription = primaryDescription, SecondaryDescription = secondaryDescription, Id = id, GroupId = groupId, CreatedAt = createdAt, AccountName = accountName, Data = data, AgentId = agentId, Hash = hash, UpdatedAt = todatetime(updatedAt), Description = description, ActivityUuid = activityUuid, SiteId = siteId, ActivityType = activityType, SiteName = siteName, AccountId = accountId, OsFamily = osFamily, GroupName = groupName, Comments = comments",
-                "outputStream": "Custom-anoraysCompanyFindings_CL"
+                "outputStream": "Custom-PanoraysCompanyFindings_CL"
             }
         ],
         "dataCollectionEndpointId": "[concat('/subscriptions/',parameters('subscription'),'/resourceGroups/',parameters('resourceGroupName'),'/providers/Microsoft.Insights/dataCollectionEndpoints/',parameters('workspace'))]"

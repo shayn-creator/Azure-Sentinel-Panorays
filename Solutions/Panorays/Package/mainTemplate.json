@@ -90,6 +90,7 @@
                   "title": "Panorays",
                   "publisher": "Microsoft",
                   "descriptionMarkdown": "The [Panorays](https://panorays-papi-v2-documentation.redocly.app/#api-access) data connector allows ingesting company findings from the Panorays API into Microsoft Sentinel. The data connector is built on Microsoft Sentinel Codeless Connector Platform. It uses the Panorays API to fetch data and it supports DCR-based [ingestion time transformations](https://docs.microsoft.com/azure/azure-monitor/logs/custom-logs-overview) that parses the received security data into a custom table so that queries don't need to parse it again, thus resulting in better performance.",
+                  "graphQueriesTableName": "PanoraysCompanyFindingPOC_CL",
                   "graphQueries": [
                     {
                       "metricName": "Total findings found",
@@ -97,8 +98,18 @@
                       "baseQuery": "{{graphQueriesTableName}}"
                     }
                   ],
-                  "sampleQueries": [],
-                  "dataTypes": [],
+                  "sampleQueries": [
+                    {
+                      "description": "Get Sample of Panorays Company Findings",
+                      "query": "{{graphQueriesTableName}}\n | take 10"
+                    }
+                  ],
+                  "dataTypes": [
+                    {
+                      "name": "{{graphQueriesTableName}}",
+                      "lastDataReceivedQuery": "{{graphQueriesTableName}}\n   | summarize Time = max(TimeGenerated)\n            | where isnotempty(Time)"
+                    }
+                  ],
                   "connectivityCriteria": [
                     {
                       "type": "HasDataConnectors",
@@ -300,10 +311,125 @@
                       "clv2ws1"
                     ],
                     "transformKql": "source | project TimeGenerated = createdAt, AgentUpdatedVersion = agentUpdatedVersion, UserId = userId, ThreatId = threatId, PrimaryDescription = primaryDescription, SecondaryDescription = secondaryDescription, Id = id, GroupId = groupId, CreatedAt = createdAt, AccountName = accountName, Data = data, AgentId = agentId, Hash = hash, UpdatedAt = todatetime(updatedAt), Description = description, ActivityUuid = activityUuid, SiteId = siteId, ActivityType = activityType, SiteName = siteName, AccountId = accountId, OsFamily = osFamily, GroupName = groupName, Comments = comments",
-                    "outputStream": "Custom-anoraysCompanyFindings_CL"
+                    "outputStream": "Custom-PanoraysCompanyFindings_CL"
                   }
                 ],
                 "dataCollectionEndpointId": "[concat('/subscriptions/',parameters('subscription'),'/resourceGroups/',parameters('resourceGroupName'),'/providers/Microsoft.Insights/dataCollectionEndpoints/',parameters('workspace'))]"
+              }
+            },
+            {
+              "name": "PanoraysCompanyFindingPOC_CL",
+              "apiVersion": "2022-10-01",
+              "type": "Microsoft.OperationalInsights/workspaces/tables",
+              "location": "[parameters('workspace-location')]",
+              "kind": null,
+              "properties": {
+                "schema": {
+                  "name": "PanoraysCompanyFindingPOC_CL",
+                  "columns": [
+                    {
+                      "name": "asset_name",
+                      "type": "string",
+                      "description": "asset_name"
+                    },
+                    {
+                      "name": "TimeGenerated",
+                      "type": "datetime",
+                      "isDefaultDisplay": true,
+                      "description": "The timestamp (UTC) reflecting the time in which the event was generated."
+                    },
+                    {
+                      "name": "category",
+                      "type": "string",
+                      "description": "category"
+                    },
+                    {
+                      "name": "cves",
+                      "type": "dynamic",
+                      "description": "Common Vulnerabilities and Exposures"
+                    },
+                    {
+                      "name": "description",
+                      "type": "string",
+                      "description": "description"
+                    },
+                    {
+                      "name": "evidence",
+                      "type": "dynamic",
+                      "description": "evidence"
+                    },
+                    {
+                      "name": "finding_text",
+                      "type": "string",
+                      "description": "finding_text"
+                    },
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "description": "id"
+                    },
+                    {
+                      "name": "is_hidden",
+                      "type": "boolean",
+                      "description": "Is hidden"
+                    },
+                    {
+                      "name": "metadata",
+                      "type": "dynamic",
+                      "description": "metadata"
+                    },
+                    {
+                      "name": "previously_disputed",
+                      "type": "boolean",
+                      "description": "Previously disputed flag"
+                    },
+                    {
+                      "name": "segments",
+                      "type": "dynamic",
+                      "description": "Segments"
+                    },
+                    {
+                      "name": "severity",
+                      "type": "string",
+                      "description": "severity"
+                    },
+                    {
+                      "name": "status",
+                      "type": "string",
+                      "description": "status"
+                    },
+                    {
+                      "name": "status_update_ts",
+                      "type": "string",
+                      "description": "Last status update timestamp"
+                    },
+                    {
+                      "name": "sub_category",
+                      "type": "string",
+                      "description": "Sub category"
+                    },
+                    {
+                      "name": "test_name",
+                      "type": "string",
+                      "description": "test name"
+                    },
+                    {
+                      "name": "test_text",
+                      "type": "string",
+                      "description": "test text"
+                    },
+                    {
+                      "name": "update_ts",
+                      "type": "datetime",
+                      "description": "Last update timestamp"
+                    },
+                    {
+                      "name": "updated_by",
+                      "type": "string",
+                      "description": "Last update user"
+                    }
+                  ]
+                }
               }
             }
           ]
@@ -329,6 +455,7 @@
           "title": "Panorays",
           "publisher": "Microsoft",
           "descriptionMarkdown": "The [Panorays](https://panorays-papi-v2-documentation.redocly.app/#api-access) data connector allows ingesting company findings from the Panorays API into Microsoft Sentinel. The data connector is built on Microsoft Sentinel Codeless Connector Platform. It uses the Panorays API to fetch data and it supports DCR-based [ingestion time transformations](https://docs.microsoft.com/azure/azure-monitor/logs/custom-logs-overview) that parses the received security data into a custom table so that queries don't need to parse it again, thus resulting in better performance.",
+          "graphQueriesTableName": "PanoraysCompanyFindingPOC_CL",
           "graphQueries": [
             {
               "metricName": "Total findings found",
@@ -336,8 +463,18 @@
               "baseQuery": "{{graphQueriesTableName}}"
             }
           ],
-          "sampleQueries": [],
-          "dataTypes": [],
+          "sampleQueries": [
+            {
+              "description": "Get Sample of Panorays Company Findings",
+              "query": "{{graphQueriesTableName}}\n | take 10"
+            }
+          ],
+          "dataTypes": [
+            {
+              "name": "{{graphQueriesTableName}}",
+              "lastDataReceivedQuery": "{{graphQueriesTableName}}\n   | summarize Time = max(TimeGenerated)\n            | where isnotempty(Time)"
+            }
+          ],
           "connectivityCriteria": [
             {
               "type": "HasDataConnectors",

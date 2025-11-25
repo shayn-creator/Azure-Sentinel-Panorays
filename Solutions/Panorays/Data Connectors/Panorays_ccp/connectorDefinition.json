@@ -9,18 +9,25 @@
       "title": "Panorays",
       "publisher": "Microsoft",
       "descriptionMarkdown": "The [Panorays](https://panorays-papi-v2-documentation.redocly.app/#api-access) data connector allows ingesting company findings from the Panorays API into Microsoft Sentinel. The data connector is built on Microsoft Sentinel Codeless Connector Platform. It uses the Panorays API to fetch data and it supports DCR-based [ingestion time transformations](https://docs.microsoft.com/azure/azure-monitor/logs/custom-logs-overview) that parses the received security data into a custom table so that queries don't need to parse it again, thus resulting in better performance.",
+      "graphQueriesTableName": "PanoraysCompanyFindingPOC_CL",
       "graphQueries": [
         {
-                    "metricName": "Total findings found",
-                    "legend": "Comnapny Findings",
-                    "baseQuery": "{{graphQueriesTableName}}"
+          "metricName": "Total findings found",
+          "legend": "Comnapny Findings",
+          "baseQuery": "{{graphQueriesTableName}}"
         }
       ],
       "sampleQueries": [
-
+        {
+          "description": "Get Sample of Panorays Company Findings",
+          "query": "{{graphQueriesTableName}}\n | take 10"
+        }
       ],
       "dataTypes": [
-
+        {
+          "name": "{{graphQueriesTableName}}",
+          "lastDataReceivedQuery": "{{graphQueriesTableName}}\n   | summarize Time = max(TimeGenerated)\n            | where isnotempty(Time)"
+        }
       ],
       "connectivityCriteria": [
         {
