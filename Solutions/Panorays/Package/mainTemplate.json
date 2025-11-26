@@ -54,16 +54,25 @@
     "dataConnectorCCPVersion": "1.0.0",
     "_dataConnectorContentIdConnectorDefinition1": "ccpPanoraysCompanyFindingPOC",
     "dataConnectorTemplateNameConnectorDefinition1": "[concat(parameters('workspace'),'-dc-',uniquestring(variables('_dataConnectorContentIdConnectorDefinition1')))]",
+    "_dataConnectorTemplateNameConnectorDefinition1Raw": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', variables('dataConnectorTemplateNameConnectorDefinition1'), variables('dataConnectorCCPVersion'))]",
+    "_dataConnectorTemplateNameConnectorDefinition1": "[variables('_dataConnectorTemplateNameConnectorDefinition1Raw')]",
     "_dataConnectorContentIdConnections1": "ccpPanoraysCompanyFindingPOCConnections",
     "dataConnectorTemplateNameConnections1": "[concat(parameters('workspace'),'-dc-',uniquestring(variables('_dataConnectorContentIdConnections1')))]",
+    "_dataConnectorTemplateNameConnections1Raw": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', variables('dataConnectorTemplateNameConnections1'), variables('dataConnectorCCPVersion'))]",
+    "_dataConnectorTemplateNameConnections1": "[variables('_dataConnectorTemplateNameConnections1Raw')]",
     "blanks": "[replace('b', 'b', '')]",
-    "_solutioncontentProductId": "[concat(take(variables('_solutionId'),50),'-','sl','-', uniqueString(concat(variables('_solutionId'),'-','Solution','-',variables('_solutionId'),'-', variables('_solutionVersion'))))]"
+    "_solutioncontentProductIdRaw": "[concat(take(variables('_solutionId'),50),'-','sl','-', uniqueString(concat(variables('_solutionId'),'-','Solution','-',variables('_solutionId'),'-', variables('_solutionVersion'))))]",
+    "_solutioncontentProductId": "[variables('_solutioncontentProductIdRaw')]",
+    "_nestedContentProductId1Raw": "[concat(take(variables('_solutionId'), 50),'-','dc','-', uniqueString(concat(variables('_solutionId'),'-','DataConnector','-',variables('_dataConnectorContentIdConnectorDefinition1'),'-', variables('dataConnectorCCPVersion'))))]",
+    "_nestedContentProductId1": "[variables('_nestedContentProductId1Raw')]",
+    "_nestedContentProductId2Raw": "[concat(take(variables('_solutionId'), 50),'-','rdc','-', uniqueString(concat(variables('_solutionId'),'-','ResourcesDataConnector','-',variables('_dataConnectorContentIdConnections1'),'-', variables('dataConnectorCCPVersion'))))]",
+    "_nestedContentProductId2": "[variables('_nestedContentProductId2Raw')]"
   },
   "resources": [
     {
       "type": "Microsoft.OperationalInsights/workspaces/providers/contentTemplates",
       "apiVersion": "2023-04-01-preview",
-      "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', variables('dataConnectorTemplateNameConnectorDefinition1'), variables('dataConnectorCCPVersion'))]",
+      "name": "[variables('_dataConnectorTemplateNameConnectorDefinition1')]",
       "location": "[parameters('workspace-location')]",
       "dependsOn": [
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
@@ -72,10 +81,19 @@
         "contentId": "[variables('_dataConnectorContentIdConnectorDefinition1')]",
         "displayName": "Panorays",
         "contentKind": "DataConnector",
+        "parameters": {
+          "connectorId": {
+            "value": "[variables('_dataConnectorContentIdConnectorDefinition1')]"
+          }
+        },
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('dataConnectorCCPVersion')]",
-          "parameters": {},
+          "parameters": {
+            "connectorId": {
+              "type": "string"
+            }
+          },
           "variables": {},
           "resources": [
             {
@@ -86,7 +104,7 @@
               "kind": "Customizable",
               "properties": {
                 "connectorUiConfig": {
-                  "id": "ccpPanoraysCompanyFindingPOC",
+                  "id": "[parameters('connectorId')]",
                   "title": "Panorays",
                   "publisher": "Microsoft",
                   "descriptionMarkdown": "The [Panorays](https://panorays-papi-v2-documentation.redocly.app/#api-access) data connector allows ingesting company findings from the Panorays API into Microsoft Sentinel. The data connector is built on Microsoft Sentinel Codeless Connector Platform. It uses the Panorays API to fetch data and it supports DCR-based [ingestion time transformations](https://docs.microsoft.com/azure/azure-monitor/logs/custom-logs-overview) that parses the received security data into a custom table so that queries don't need to parse it again, thus resulting in better performance.",
@@ -112,8 +130,7 @@
                   ],
                   "connectivityCriteria": [
                     {
-                      "type": "HasDataConnectors",
-                      "value": null
+                      "type": "HasDataConnectors"
                     }
                   ],
                   "availability": {
@@ -121,8 +138,6 @@
                     "isPreview": false
                   },
                   "permissions": {
-                    "tenant": null,
-                    "licenses": null,
                     "resourceProvider": [
                       {
                         "provider": "Microsoft.OperationalInsights/workspaces",
@@ -178,8 +193,7 @@
                           },
                           "type": "ConnectionToggleButton"
                         }
-                      ],
-                      "innerSteps": null
+                      ]
                     }
                   ],
                   "isConnectivityCriteriasMatchSome": false
@@ -314,7 +328,7 @@
                     "outputStream": "Custom-PanoraysCompanyFindings_CL"
                   }
                 ],
-                "dataCollectionEndpointId": "[concat('/subscriptions/',parameters('subscription'),'/resourceGroups/',parameters('resourceGroupName'),'/providers/Microsoft.Insights/dataCollectionEndpoints/',parameters('workspace'))]"
+                "dataCollectionEndpointId": "[resourceId(parameters('subscription'), parameters('resourceGroupName'), 'Microsoft.Insights/dataCollectionEndpoints', parameters('workspace'))]"
               }
             },
             {
@@ -322,7 +336,6 @@
               "apiVersion": "2022-10-01",
               "type": "Microsoft.OperationalInsights/workspaces/tables",
               "location": "[parameters('workspace-location')]",
-              "kind": null,
               "properties": {
                 "schema": {
                   "name": "PanoraysCompanyFindingPOC_CL",
@@ -437,159 +450,16 @@
         "packageKind": "Solution",
         "packageVersion": "[variables('_solutionVersion')]",
         "packageName": "[variables('_solutionName')]",
-        "contentProductId": "[concat(take(variables('_solutionId'), 50),'-','dc','-', uniqueString(concat(variables('_solutionId'),'-','DataConnector','-',variables('_dataConnectorContentIdConnectorDefinition1'),'-', variables('dataConnectorCCPVersion'))))]",
+        "contentProductId": "[variables('_nestedContentProductId1')]",
         "packageId": "[variables('_solutionId')]",
         "contentSchemaVersion": "3.0.0",
         "version": "[variables('dataConnectorCCPVersion')]"
       }
     },
     {
-      "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',variables('_dataConnectorContentIdConnectorDefinition1'))]",
-      "apiVersion": "2022-09-01-preview",
-      "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectorDefinitions",
-      "location": "[parameters('workspace-location')]",
-      "kind": "Customizable",
-      "properties": {
-        "connectorUiConfig": {
-          "id": "ccpPanoraysCompanyFindingPOC",
-          "title": "Panorays",
-          "publisher": "Microsoft",
-          "descriptionMarkdown": "The [Panorays](https://panorays-papi-v2-documentation.redocly.app/#api-access) data connector allows ingesting company findings from the Panorays API into Microsoft Sentinel. The data connector is built on Microsoft Sentinel Codeless Connector Platform. It uses the Panorays API to fetch data and it supports DCR-based [ingestion time transformations](https://docs.microsoft.com/azure/azure-monitor/logs/custom-logs-overview) that parses the received security data into a custom table so that queries don't need to parse it again, thus resulting in better performance.",
-          "graphQueriesTableName": "PanoraysCompanyFindingPOC_CL",
-          "graphQueries": [
-            {
-              "metricName": "Total findings found",
-              "legend": "Comnapny Findings",
-              "baseQuery": "{{graphQueriesTableName}}"
-            }
-          ],
-          "sampleQueries": [
-            {
-              "description": "Get Sample of Panorays Company Findings",
-              "query": "{{graphQueriesTableName}}\n | take 10"
-            }
-          ],
-          "dataTypes": [
-            {
-              "name": "{{graphQueriesTableName}}",
-              "lastDataReceivedQuery": "{{graphQueriesTableName}}\n   | summarize Time = max(TimeGenerated)\n            | where isnotempty(Time)"
-            }
-          ],
-          "connectivityCriteria": [
-            {
-              "type": "HasDataConnectors",
-              "value": null
-            }
-          ],
-          "availability": {
-            "status": 1,
-            "isPreview": false
-          },
-          "permissions": {
-            "tenant": null,
-            "licenses": null,
-            "resourceProvider": [
-              {
-                "provider": "Microsoft.OperationalInsights/workspaces",
-                "permissionsDisplayText": "Read and Write permissions are required.",
-                "providerDisplayName": "Workspace",
-                "scope": "Workspace",
-                "requiredPermissions": {
-                  "read": true,
-                  "write": true,
-                  "delete": true,
-                  "action": false
-                }
-              }
-            ]
-          },
-          "instructionSteps": [
-            {
-              "instructions": [
-                {
-                  "type": "Markdown",
-                  "parameters": {
-                    "content": "#### Configuration steps for the Panorays API \n Follow the instructions to obtain the credentials. "
-                  }
-                },
-                {
-                  "type": "Markdown",
-                  "parameters": {
-                    "content": "#### 1. Retrieve Panorays API Token from here: https://www.panoraysapp.com/profile/api_tokens"
-                  }
-                },
-                {
-                  "parameters": {
-                    "label": "Panorays Management URL",
-                    "placeholder": "https://www.panoraysapp.com/",
-                    "type": "text",
-                    "name": "managementUrl"
-                  },
-                  "type": "Textbox"
-                },
-                {
-                  "parameters": {
-                    "label": "API Token",
-                    "placeholder": "API Token",
-                    "type": "securestring",
-                    "name": "apitoken"
-                  },
-                  "type": "Textbox"
-                },
-                {
-                  "parameters": {
-                    "label": "toggle",
-                    "name": "toggle"
-                  },
-                  "type": "ConnectionToggleButton"
-                }
-              ],
-              "innerSteps": null
-            }
-          ],
-          "isConnectivityCriteriasMatchSome": false
-        }
-      }
-    },
-    {
-      "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('DataConnector-', variables('_dataConnectorContentIdConnectorDefinition1')))]",
-      "apiVersion": "2022-01-01-preview",
-      "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
-      "properties": {
-        "parentId": "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/dataConnectorDefinitions', variables('_dataConnectorContentIdConnectorDefinition1'))]",
-        "contentId": "[variables('_dataConnectorContentIdConnectorDefinition1')]",
-        "kind": "DataConnector",
-        "version": "[variables('dataConnectorCCPVersion')]",
-        "source": {
-          "sourceId": "[variables('_solutionId')]",
-          "name": "[variables('_solutionName')]",
-          "kind": "Solution"
-        },
-        "author": {
-          "name": "Microsoft",
-          "email": "[variables('_email')]"
-        },
-        "support": {
-          "name": "Microsoft Corporation",
-          "email": "support@microsoft.com",
-          "tier": "Microsoft",
-          "link": "https://support.microsoft.com"
-        },
-        "dependencies": {
-          "criteria": [
-            {
-              "version": "[variables('dataConnectorCCPVersion')]",
-              "contentId": "[variables('_dataConnectorContentIdConnections1')]",
-              "kind": "ResourcesDataConnector"
-            }
-          ]
-        }
-      }
-    },
-    {
       "type": "Microsoft.OperationalInsights/workspaces/providers/contentTemplates",
       "apiVersion": "2023-04-01-preview",
-      "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', variables('dataConnectorTemplateNameConnections1'), variables('dataConnectorCCPVersion'))]",
+      "name": "[variables('_dataConnectorTemplateNameConnections1')]",
       "location": "[parameters('workspace-location')]",
       "dependsOn": [
         "[extensionResourceId(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace')), 'Microsoft.SecurityInsights/contentPackages', variables('_solutionId'))]"
@@ -719,7 +589,7 @@
         "packageKind": "Solution",
         "packageVersion": "[variables('_solutionVersion')]",
         "packageName": "[variables('_solutionName')]",
-        "contentProductId": "[concat(take(variables('_solutionId'), 50),'-','rdc','-', uniqueString(concat(variables('_solutionId'),'-','ResourcesDataConnector','-',variables('_dataConnectorContentIdConnections1'),'-', variables('dataConnectorCCPVersion'))))]",
+        "contentProductId": "[variables('_nestedContentProductId2')]",
         "packageId": "[variables('_solutionId')]",
         "contentSchemaVersion": "3.0.0",
         "version": "[variables('dataConnectorCCPVersion')]"
