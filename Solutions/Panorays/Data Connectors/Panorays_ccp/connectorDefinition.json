@@ -73,11 +73,17 @@
               }
             },
             {
+              "type": "Markdown",
               "parameters": {
-                "label": "Panorays Management URL",
-                "placeholder": "https://www.panoraysapp.com/",
+                "content": "#### 2. Retrieve API Token\n   2.1. Log in to the Panorays App\n 2.2. In the Panorays App, click [**Company Settings**] -> [**API Tokens**]\n  2.3. Click on [**Generate Token**] button.\n   2.4. Enter a token name and select the permissions.\n   2.5. Click on [**Generate Token**] and [**Copy API Token**]\n   2.6. Paste the Token here"
+              }
+            },
+            {
+              "parameters": {
+                "label": "Panorays API Base URL",
+                "placeholder": "https://api.panoraysapp.com",
                 "type": "text",
-                "name": "managementUrl"
+                "name": "panoraysAPIBaseUrl"
               },
               "type": "Textbox"
             },
@@ -97,8 +103,7 @@
               },
               "type": "ConnectionToggleButton"
             }
-          ],
-          "innerSteps": null
+          ]
         }
       ],
       "isConnectivityCriteriasMatchSome": false
