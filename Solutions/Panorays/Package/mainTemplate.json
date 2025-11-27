@@ -41,6 +41,19 @@
       "metadata": {
         "description": "subscription id where Microsoft Sentinel is setup"
       }
+    },
+    "panoraysAPIBaseUrl": {
+      "type": "string",
+      "defaultValue": "https://api.panoraysapp.com",
+      "metadata": {
+        "description": "subscription id where Microsoft Sentinel is setup"
+      }
+    },
+    "apitoken": {
+      "type": "string",
+      "metadata": {
+        "description": "Company API Token"
+      }
     }
   },
   "variables": {
@@ -173,7 +186,7 @@
                             "label": "Panorays Management URL",
                             "placeholder": "https://www.panoraysapp.com/",
                             "type": "text",
-                            "name": "managementUrl"
+                            "name": "panoraysAPIBaseUrl"
                           },
                           "type": "Textbox"
                         },
@@ -558,7 +571,7 @@
                   "ApiKeyIdentifier": "ApiToken"
                 },
                 "request": {
-                  "apiEndpoint": "[[concat(parameters('https://api.panoraysapp.com'), '/v2/findings/']",
+                  "apiEndpoint": "[[concat(parameters('panoraysAPIBaseUrl'), '/v2/findings/']",
                   "rateLimitQPS": 10,
                   "queryWindowInMin": 5,
                   "httpMethod": "GET",

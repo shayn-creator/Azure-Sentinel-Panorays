@@ -1,7 +1,7 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/0.2.0-preview/CreateUIDefinition.MultiVm.json#",
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
   "handler": "Microsoft.Azure.CreateUIDef",
-  "version": "0.2.0-preview",
+  "version": "0.1.2-preview",
   "parameters": {
     "config": {
       "isWizard": false,
@@ -74,7 +74,9 @@
             "toolTip": "The base URL for the Panorays API.",
             "defaultValue": "https://api.panoraysapp.com",
             "constraints": {
-              "required": true
+              "required": true,
+              "regex": "^https://.+",
+              "validationMessage": "Please enter a valid URL starting with https://"
             }
           },
           {
@@ -84,7 +86,9 @@
             "toolTip": "Your Panorays API Token.",
             "placeholder": "Paste your API Token here",
             "constraints": {
-              "required": true
+              "required": true,
+              "regex": "^\\S+$",
+              "validationMessage": "The API Token must not contain spaces."
             },
             "osPlatform": "Linux",
             "visible": true,
